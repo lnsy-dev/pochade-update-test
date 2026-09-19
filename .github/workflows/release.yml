@@ -14,8 +14,24 @@ permissions:
   contents: write
 
 jobs:
+  prepare:
+    name: Prepare release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Remove any stale draft release for this tag
+        # Re-releasing the same version (moved tag, re-run after a failed
+        # job) would otherwise collide with artifacts left on the old draft.
+        run: gh release delete "$TAG" --yes || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+
   release:
     name: Build (${{ matrix.os }})
+    needs: prepare
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     strategy:
