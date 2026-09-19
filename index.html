@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--  Essential META Tags -->
+  <meta property="og:title" content="Pochade Update Test">
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="">
+  <meta property="og:url" content="">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!--  Non-Essential, But Recommended -->
+  <meta property="og:description" content="Verify the GitHub release auto-update flow end to end">
+  <meta property="og:site_name" content="Pochade Update Test">
+  <meta name="twitter:image:alt" content="">
+
+  <title>Pochade Update Test</title>
+
+</head>
+
+<body>
+  <!--
+    Window Drag Region
+    A custom draggable title bar so users can move the window even when
+    the native title bar is hidden (macOS) or styled transparently.
+  -->
+  <div class="title-bar"></div>
+
+  <!--
+    Memory Profiler Component
+    Fixed upper-left overlay showing memory and CPU usage. Hidden by default;
+    shown only when the Electron app is launched with --memory-profiler.
+  -->
+  <memory-profiler-component id="memory_profiler"></memory-profiler-component>
+
+  <h1>Pochade Update Test</h1>
+  <p>Verify the GitHub release auto-update flow end to end</p>
+
+  <!-- ========================================================================= -->
+  <!-- Database Example                                                          -->
+  <!-- ========================================================================= -->
+
+  <section id="database-example">
+    <!--
+      Database Component
+      Demonstrates node:sqlite in the Electron main process:
+      read/write entries and index generation, persisted to a real
+      SQLite file on disk (sessionData/app.sqlite3).
+    -->
+    <db-component id="db_component"></db-component>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- Local File Storage Example                                                -->
+  <!-- ========================================================================= -->
+
+  <section id="file-storage-example">
+    <!--
+      File Storage Component
+      Demonstrates Chrome's File System Access API: export the SQLite
+      database to a file on disk and import one back.
+    -->
+    <file-storage-component id="file_storage_component"></file-storage-component>
+  </section>
+
+  
+
+  <script>
+    /**
+     * Event Listener Setup
+     *
+     * This script demonstrates how to listen to custom events emitted
+     * by dataroom-js components using the component's .on() method.
+     *
+     * We wrap it in a setTimeout to ensure the custom elements have
+     * been defined and connected before we attach listeners.
+     * In production code, prefer using DOMContentLoaded or
+     * customElements.whenDefined().
+     */
+    setTimeout(() => {
+      // Listen for database events
+      if (typeof db_component !== 'undefined' && db_component.on) {
+        db_component.on('DB-ENTRY-ADDED', (data) => {
+          console.log('[Main Thread] Entry added:', data);
+        });
+        db_component.on('DB-INDEX-CREATED', (data) => {
+          console.log('[Main Thread] Index created:', data);
+        });
+        db_component.on('DB-ERROR', (data) => {
+          console.error('[Main Thread] Database error:', data);
+        });
+      }
+
+      // Listen for file storage events
+      if (typeof file_storage_component !== 'undefined' && file_storage_component.on) {
+        file_storage_component.on('DB-EXPORTED', (data) => {
+          console.log('[Main Thread] Database exported:', data);
+        });
+        file_storage_component.on('DB-IMPORTED', (data) => {
+          console.log('[Main Thread] Database imported:', data);
+        });
+      }
+
+      
+
+      
+    }, 1000);
+  </script>
+</body>
+
+</html>

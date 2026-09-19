@@ -1,0 +1,67 @@
+name: Release Electron App
+
+# Pushing a vX.Y.Z tag builds installers for macOS, Windows, and Linux and
+# attaches them to a GitHub Release. As soon as the release is published,
+# update.electronjs.org serves it to installed clients (see README.md →
+# "Releases & Auto-Updates").
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and upload Electron app
+        # Artifacts are uploaded to a single draft release so all matrix
+        # legs contribute to the same one.
+        run: npm run electron:build -- --publish always
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # macOS builds must be code-signed for installed macOS clients to
+          # accept updates. Add these repository secrets (base64 Developer ID
+          # .p12 + its password) to enable signing; without them the macOS
+          # zip is unsigned and macOS clients will not auto-update. Windows
+          # updates work without signing.
+          # CSC_LINK: ${{ secrets.MAC_CERTS }}
+          # CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
+
+  publish:
+    name: Publish release
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Publish the drafted release
+        # update.electronjs.org only serves published (non-draft) releases,
+        # so flip the draft to published once every platform has finished.
+        run: gh release edit "$TAG" --draft=false --latest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}

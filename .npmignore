@@ -1,0 +1,29 @@
+# Development files
+node_modules/
+.env*
+!.env.example
+package-lock.json
+prompts/
+assets/
+release/
+
+# Tests and test configuration (not needed in published package)
+tests/
+wdio.conf.js
+vitest.config.js
+wdio-*/
+
+# Version control
+.git/
+.gitignore
+
+# Documentation / OS noise
+.DS_Store
+*.log
+
+# WebAssembly build tools (pre-built artifacts in pkg/ are included)
+src/wasm/cpp/Makefile
+src/wasm/rust/**/Cargo.toml
+src/wasm/rust/**/Cargo.lock
+src/wasm/rust/**/src/
+src/wasm/rust/**/target/

@@ -1,0 +1,74 @@
+/**
+ * Database Component Styles
+ *
+ * Styles for <db-component> (src/db-component.js).
+ */
+
+.db-status {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.db-form {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.db-form input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--highlight-color);
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.db-form button {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--highlight-color);
+  border-radius: 4px;
+  background: var(--highlight-color);
+  color: var(--background-color);
+  font: inherit;
+  cursor: pointer;
+}
+
+.db-indexes {
+  font-size: 0.85rem;
+  font-family: monospace;
+  opacity: 0.8;
+}
+
+.db-entries {
+  list-style: none;
+  padding: 0;
+}
+
+.db-entries li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground-color) 15%, transparent);
+}
+
+.db-entries li span {
+  flex: 1;
+}
+
+.db-entries li small {
+  opacity: 0.6;
+  white-space: nowrap;
+}
+
+.db-entries li button {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--highlight-color);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--highlight-color);
+  font: inherit;
+  cursor: pointer;
+}

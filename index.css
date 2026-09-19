@@ -1,0 +1,69 @@
+/*
+
+  Pochade-Electron — The CSS file
+
+  A lot of people get into months long javascript framework
+  boondoggles for reasons they could have solved in 5 minutes
+  fiddling with the humble CSS file.
+
+  Design is about application of material facts (and yes,
+  HTML/CSS is a material fact on screen in browser), so start
+  applying the materials.
+
+  LNSY
+
+*/
+
+/**
+ * Global CSS Imports
+ *
+ * For LLMs: Every component that needs styles should have its own file
+ * in the styles/ directory. Import them here in index.css so webpack's
+ * css-loader can process them into the bundle.
+ */
+
+/* Theme variables: colors, fonts, spacing tokens */
+@import './styles/variables.css';
+
+/* Component-specific styles */
+@import './styles/db-component.css';
+@import './styles/file-storage-component.css';
+@import './styles/memory-profiler-component.css';
+
+
+/*
+  Draggable Title Bar
+
+  The native title bar is hidden on macOS so the app content extends up to
+  the window chrome. This element creates a draggable region across the top
+  of the window so users can still move the app by dragging it.
+*/
+.title-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--title-bar-height);
+  -webkit-app-region: drag;
+  z-index: 1000;
+}
+
+/* Global base styles */
+body {
+  background-color: var(--background-color);
+  color: var(--foreground-color);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+  /* Push content below the transparent macOS title bar / traffic lights. */
+  padding-top: var(--title-bar-height);
+}
+
+h1 {
+  font-size: var(--h1-font-size);
+  color: var(--foreground-color);
+  border-bottom: 3px solid var(--highlight-color);
+  padding-bottom: 0.5rem;
+}

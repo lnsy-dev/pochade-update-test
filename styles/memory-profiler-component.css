@@ -1,0 +1,89 @@
+/**
+ * Memory Profiler Component Styles
+ *
+ * Styles for <memory-profiler-component> (src/memory-profiler-component.js).
+ * The overlay is fixed in the upper-left corner, above other content.
+ */
+
+memory-profiler-component {
+  position: fixed;
+  top: calc(var(--title-bar-height) + 0.5rem);
+  left: 0.5rem;
+  z-index: 10000;
+  min-width: 220px;
+  max-width: 320px;
+  padding: 0.75rem;
+  border: 2px solid var(--highlight-color);
+  border-radius: 8px;
+  background-color: var(--background-color);
+  color: var(--foreground-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: monospace;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+memory-profiler-component .profiler-title {
+  margin: 0 0 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--highlight-color);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+memory-profiler-component .profiler-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+memory-profiler-component .profiler-metric {
+  display: flex;
+  flex-direction: column;
+}
+
+memory-profiler-component .profiler-value {
+  font-weight: 700;
+}
+
+memory-profiler-component .profiler-subtitle {
+  margin: 0 0 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+memory-profiler-component .profiler-processes {
+  list-style: none;
+  margin: 0 0 0.5rem;
+  padding: 0;
+}
+
+memory-profiler-component .profiler-processes li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.15rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground-color) 10%, transparent);
+}
+
+memory-profiler-component .process-type {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+memory-profiler-component .process-memory,
+memory-profiler-component .process-cpu {
+  flex-shrink: 0;
+  text-align: right;
+  min-width: 4rem;
+}
+
+memory-profiler-component .profiler-age {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  text-align: right;
+}
